@@ -1,17 +1,19 @@
 <div id="components" class="container" ng-controller="PcbuilderController">
-  <div class="col-md-12">
-    <div class="col-md-4" ng-repeat="component in components">
-      <div class="panel panel-default">
-        <div class="panel-body">
-          <a><img class="center-block" ng-src="/assets/icon-{{ component.name }}.png"></a>
-        </div>
-        <div class="panel-footer">
-          <select name="{{ component.category }}" class="form-control">
-            <option value="" disabled selected>{{ component.name }}</option>
-            <option ng-repeat="(key, spec) in component.product_schema">{{ key }}</option>
-          </select>
-        </div>
-      </div>
+    <div class="col-md-12">
+        <form ng-submit="submitSpecs()" ng-controller="PcbuilderController">
+            <div class="col-md-4" ng-repeat="component in components">
+                <div class="panel panel-default">
+                    <div class="panel-body">
+                        <a><img class="center-block" ng-src="/assets/icon-{{ component.name }}.png"></a>
+                    </div>
+                    <div class="panel-footer">
+                        <select ng-model="formData[component.name]" ng-options="key as key for (key, spec) in component.product_schema track by key" class="form-control">
+                            <option value="" disabled selected>{{ component.name }}</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+            <input type="submit">
+        </form>
     </div>
-  </div>
 </div>
