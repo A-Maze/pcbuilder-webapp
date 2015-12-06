@@ -8,7 +8,7 @@
         <div class="panel-footer">
           <select name="{{ component.category }}" class="form-control">
             <option value="" disabled selected>{{ component.name }}</option>
-            <!--<option ng-repeat="spec in component.product_schema">{{ spec }}</option>-->
+            <option ng-repeat="(key, spec) in component.product_schema">{{ key }}</option>
           </select>
         </div>
       </div>
