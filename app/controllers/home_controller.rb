@@ -7,7 +7,7 @@ class HomeController < ApplicationController
     @components = JSON.parse(result)['categories']
 
     @components.each_with_index do |component, index|
-        @components[index]['product_schema'] = JSON.parse(component['product_schema'])
+        @components[index]['product_schema'] = {"type": ['ssd', 'hdd'],"size": ['250gb', '500gb', '1tb']} # temporarily json object (mock)
     end
 
     render json: @components
