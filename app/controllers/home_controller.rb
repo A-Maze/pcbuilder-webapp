@@ -7,9 +7,7 @@ class HomeController < ApplicationController
     @components = JSON.parse(result)['categories']
 
     @components.each_with_index do |component, index|
-      if index != 3
         @components[index]['product_schema'] = JSON.parse(component['product_schema'])
-      end
     end
 
     render json: @components
