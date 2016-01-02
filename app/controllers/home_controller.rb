@@ -14,8 +14,8 @@ class HomeController < ApplicationController
   end
 
   def get_build
-    p request.query_parameters
+    requirements = request.query_parameters
 
-    render json: request.query_parameters
+    render json: BuildController.new(requirements)
   end
 end
