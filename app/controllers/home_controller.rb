@@ -15,7 +15,8 @@ class HomeController < ApplicationController
 
   def get_build
     requirements = request.query_parameters
+    builder = BuildController.new(requirements)
 
-    render json: BuildController.new(requirements)
+    render json: builder.get_build
   end
 end

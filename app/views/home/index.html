@@ -1,7 +1,7 @@
 <div id="components" class="container">
     <div class="col-md-12">
         <form ng-submit="submitSpecs()" ng-controller="PcbuilderController">
-            <div class="col-md-4" ng-repeat="component in components">
+            <div class="col-md-4" ng-repeat-start="component in components">
                 <div class="panel panel-default">
                     <div class="panel-body">
                         <a><img class="center-block" ng-src="/assets/icon-{{ component.name }}.png"></a>
@@ -16,7 +16,7 @@
                 </div>
             </div>
 
-            <input type="submit" class="btn btn-primary">
+            <input ng-repeat-end type="submit" class="btn btn-primary">
         </form>
     </div>
 </div>
