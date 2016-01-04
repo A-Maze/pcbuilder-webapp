@@ -3,11 +3,11 @@ require 'json'
 
 class HomeController < ApplicationController
   def get_components_structure
-    result = Net::HTTP.get(URI.parse('http://95.85.12.99:6543/category'))
+    result = Net::HTTP.get(URI.parse('http://localhost:6543/category'))
     @components = JSON.parse(result)['categories']
 
     @components.each_with_index do |component, index|
-        @components[index]['product_schema'] = {"type": ['ssd', 'hdd'],"size": ['250gb', '500gb', '1tb']} # temporarily json object (mock)
+        #@components[index]['product_schema'] = {"type": ['ssd', 'hdd'],"size": ['250gb', '500gb', '1tb']} # temporarily json object (mock)
     end
 
     render json: @components
