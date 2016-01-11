@@ -12,12 +12,13 @@ class BuildController < ApplicationController
 
   def get_all_products
     _ = {"memory" => JSON.parse(Net::HTTP.get(URI.parse('http://localhost:6543/category/memory')))['products']},
-    { "hard_drive" => JSON.parse(Net::HTTP.get(URI.parse('http://localhost:6543/category/hard_drive')))['products']},
-    { "cooler" => JSON.parse(Net::HTTP.get(URI.parse('http://localhost:6543/category/cooler')))['products']},
-    { "case" => JSON.parse(Net::HTTP.get(URI.parse('http://localhost:6543/category/case')))['products']},
-    { "motherboard" => JSON.parse(Net::HTTP.get(URI.parse('http://localhost:6543/category/motherboard')))['products']},
-    { "video_card" => JSON.parse(Net::HTTP.get(URI.parse('http://localhost:6543/category/video_card')))['products']},
-    { "optical_drive" => JSON.parse(Net::HTTP.get(URI.parse('http://localhost:6543/category/optical_drive')))['products']}
+        { "motherboard" => JSON.parse(Net::HTTP.get(URI.parse('http://localhost:6543/category/motherboard')))['products']},
+        { "hard_drive" => JSON.parse(Net::HTTP.get(URI.parse('http://localhost:6543/category/hard_drive')))['products']},
+        { "cooler" => JSON.parse(Net::HTTP.get(URI.parse('http://localhost:6543/category/cooler')))['products']},
+        { "case" => JSON.parse(Net::HTTP.get(URI.parse('http://localhost:6543/category/case')))['products']},
+        { "cpu" => JSON.parse(Net::HTTP.get(URI.parse('http://localhost:6543/category/cpu')))['products']},
+        { "video_card" => JSON.parse(Net::HTTP.get(URI.parse('http://localhost:6543/category/video_card')))['products']},
+        { "optical_drive" => JSON.parse(Net::HTTP.get(URI.parse('http://localhost:6543/category/optical_drive')))['products']}
   end
 
   def get_build(products, requirements)
@@ -35,7 +36,7 @@ class BuildController < ApplicationController
 
       i = 0
       loop do
-        break if is_compatible(self.components, products[i])
+        break if is_compatible(self.components, cat, products[i])
         i += 1
 
         break if i > 10
@@ -53,11 +54,25 @@ class BuildController < ApplicationController
     # for each product category is compatatible?
   end
 
-  def is_compatible(components, product)
+  def is_compatible(components, category, product)
     if components.empty?
       return true
     else
+      if category == 'motherboard' && components['memory']['memory_type'] != product['memory_type']
+        return false
+      end
 
+      if category == 'case' && components['motherboard']['form_factor'] != product['form_factor']
+        return false
+      end
+
+      # if category == 'video_card' && components.has_key?('motherboard')
+      #   return false
+      # end
+
+      if category == 'cpu' && components['cpu']['socket'] != product['socket']
+        return true
+      end
     end
   end
 
