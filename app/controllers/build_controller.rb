@@ -18,7 +18,8 @@ class BuildController < ApplicationController
         { "case" => JSON.parse(Net::HTTP.get(URI.parse('http://localhost:6543/category/case')))['products']},
         { "cpu" => JSON.parse(Net::HTTP.get(URI.parse('http://localhost:6543/category/cpu')))['products']},
         { "video_card" => JSON.parse(Net::HTTP.get(URI.parse('http://localhost:6543/category/video_card')))['products']},
-        { "optical_drive" => JSON.parse(Net::HTTP.get(URI.parse('http://localhost:6543/category/optical_drive')))['products']}
+        { "optical_drive" => JSON.parse(Net::HTTP.get(URI.parse('http://localhost:6543/category/optical_drive')))['products']},
+        { "power_supply" => JSON.parse(Net::HTTP.get(URI.parse('http://localhost:6543/category/power_supply')))['products']}
   end
 
   def get_build(products, requirements)
@@ -47,7 +48,7 @@ class BuildController < ApplicationController
       break if j > 10
     end
 
-    return products
+    return components
 
     # pro
 
@@ -62,7 +63,7 @@ class BuildController < ApplicationController
         return false
       end
 
-      if category == 'case' && components['motherboard']['form_factor'] != product['form_factor']
+      if category == 'case' && components['motherboard']['form_factor'] != product['Moederbord formaat']
         return false
       end
 
@@ -70,9 +71,11 @@ class BuildController < ApplicationController
       #   return false
       # end
 
-      if category == 'cpu' && components['cpu']['socket'] != product['socket']
-        return true
-      end
+      # if category == 'cpu' && components['motherboard']['socket'] != product['socket']
+      #   return false
+      # end
+
+      return true
     end
   end
 
