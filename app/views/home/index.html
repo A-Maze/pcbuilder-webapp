@@ -1,14 +1,14 @@
 <div id="components" class="container">
     <div class="col-md-12">
         <form ng-submit="submitSpecs()" ng-controller="PcbuilderController">
-            <div class="col-md-4" ng-repeat-start="component in components">
+            <div class="col-md-4" ng-repeat="component in components">
                 <div class="panel panel-default">
                     <div class="panel-body">
-                        <a><img class="center-block" ng-src="/assets/icon-{{ component }}.png"></a>
+                        <a><img class="center-block" ng-src="/assets/icon-{{ component.category }}.png"></a>
                     </div>
                     <div class="panel-footer">
-                        <div class="form-group" ng-repeat="(type, specs) in component.product_schema">
-                            <select ng-model="formData[component.name][type]" ng-options="spec for spec in specs" class="form-control">
+                        <div class="form-group" ng-repeat="(type, specs) in component.filters">
+                            <select ng-model="formData[component.category][type]" ng-options="spec for spec in specs" class="form-control">
                                 <option value="" disabled selected>{{ type }}</option>
                             </select>
                         </div>
@@ -16,7 +16,7 @@
                 </div>
             </div>
 
-            <input ng-repeat-end type="submit" class="btn btn-primary">
+            <input type="submit" class="btn btn-primary">
         </form>
     </div>
 </div>
