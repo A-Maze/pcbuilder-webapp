@@ -1,22 +1,27 @@
 <div id="components" class="container">
     <div class="col-md-12">
         <form ng-submit="submitSpecs()" ng-controller="PcbuilderController">
-            <div class="col-md-4" ng-repeat="component in components">
+            <div class="col-md-4 panel-group" id="accordion" ng-repeat="component in components">
                 <div class="panel panel-default">
-                    <div class="panel-body">
+                    <div class="panel-heading" data-toggle="collapse" data-parent="#accordion" data-target="#{{ component.category }}">
                         <a><img class="center-block" ng-src="/assets/icon-{{ component.category }}.png"></a>
                     </div>
-                    <div class="panel-footer">
-                        <div class="form-group" ng-repeat="(type, specs) in component.filters">
+                    <div id="{{ component.category }}" class="panel-collapse collapse">
+                        <div class="panel-body form-group" ng-repeat="(type, specs) in component.filters">
                             <select ng-model="formData[component.category][type]" ng-options="spec for spec in specs" class="form-control">
-                                <option value="" disabled selected>{{ type }}</option>
+                                <option value="" selected>{{ type }}</option>
                             </select>
                         </div>
+                    </div>
+                    <div ng-show="!component.filters" class="panel-body">
+                        Er zijn geen filterbare specificaties voor dit component
                     </div>
                 </div>
             </div>
 
-            <input type="submit" class="btn btn-primary">
+            <div ng-show="components.length" class="panel-body">
+                <input type="submit" class="btn btn-primary btn-lg">
+            </div>
         </form>
     </div>
 </div>
