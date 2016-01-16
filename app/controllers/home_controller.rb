@@ -3,20 +3,16 @@ require 'json'
 
 class HomeController < ApplicationController
   def get_components_structure
-    result = Net::HTTP.get(URI.parse('http://localhost:6543/category'))
-    @components = JSON.parse(result)['categories']
-
-    @components.each_with_index do |component, index|
-        #@components[index]['product_schema'] = {"type": ['ssd', 'hdd'],"size": ['250gb', '500gb', '1tb']} # temporarily json object (mock)
-    end
+    result = Net::HTTP.get(URI.parse(Rails.configuration.api_url + '/category/filter'))
+    result = File.read(Rails.root.join('app', 'assets', 'javascripts', 'filters.json'))
+    @components = JSON.parse(result)
 
     render json: @components
   end
 
   def get_build
     requirements = request.query_parameters
-    builder = BuildController.new(requirements)
 
-    render json: builder.get_build
+    render json: BuildController.new(requirements)
   end
 end

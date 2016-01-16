@@ -6,32 +6,32 @@ class BuildController < ApplicationController
   def initialize(requirements)
     self.components = Hash.new
     self.requirements = requirements
-    self.products = get_all_products
+    self.products = JSON.parse(File.read(Rails.root.join('app', 'assets', 'javascripts', 'products.json'))) # get_all_products
+
     get_build(self.products, self.requirements)
   end
 
   def get_all_products
-    _ = {"memory" => JSON.parse(Net::HTTP.get(URI.parse('http://localhost:6543/category/memory')))['products']},
-        { "motherboard" => JSON.parse(Net::HTTP.get(URI.parse('http://localhost:6543/category/motherboard')))['products']},
-        { "hard_drive" => JSON.parse(Net::HTTP.get(URI.parse('http://localhost:6543/category/hard_drive')))['products']},
-        { "cooler" => JSON.parse(Net::HTTP.get(URI.parse('http://localhost:6543/category/cooler')))['products']},
-        { "case" => JSON.parse(Net::HTTP.get(URI.parse('http://localhost:6543/category/case')))['products']},
-        { "cpu" => JSON.parse(Net::HTTP.get(URI.parse('http://localhost:6543/category/cpu')))['products']},
-        { "video_card" => JSON.parse(Net::HTTP.get(URI.parse('http://localhost:6543/category/video_card')))['products']},
-        { "optical_drive" => JSON.parse(Net::HTTP.get(URI.parse('http://localhost:6543/category/optical_drive')))['products']},
-        { "power_supply" => JSON.parse(Net::HTTP.get(URI.parse('http://localhost:6543/category/power_supply')))['products']}
+    _ = {"memory" => JSON.parse(Net::HTTP.get(URI.parse(Rails.configuration.api_url + '/category/memory')))['products']},
+        { "motherboard" => JSON.parse(Net::HTTP.get(URI.parse(Rails.configuration.api_url + '/category/motherboard')))['products']},
+        { "hard_drive" => JSON.parse(Net::HTTP.get(URI.parse(Rails.configuration.api_url + '/category/hard_drive')))['products']},
+        { "cooler" => JSON.parse(Net::HTTP.get(URI.parse(Rails.configuration.api_url + '/category/cooler')))['products']},
+        { "case" => JSON.parse(Net::HTTP.get(URI.parse(Rails.configuration.api_url + '/category/case')))['products']},
+        { "cpu" => JSON.parse(Net::HTTP.get(URI.parse(Rails.configuration.api_url + '/category/cpu')))['products']},
+        { "video_card" => JSON.parse(Net::HTTP.get(URI.parse(Rails.configuration.api_url + '/category/video_card')))['products']},
+        { "optical_drive" => JSON.parse(Net::HTTP.get(URI.parse(Rails.configuration.api_url + '/category/optical_drive')))['products']},
+        { "power_supply" => JSON.parse(Net::HTTP.get(URI.parse(Rails.configuration.api_url + '/category/power_supply')))['products']}
   end
 
   def get_build(products, requirements)
-    # for each category the requirement
-    requirements.each do |key, req|
-      p "filter for: " + key
-
-      # key == category
-      products[key] = filter_requirements(key, req)
+    requirements.each do |category, requirement|
+      products.each_with_index do |p, index|
+        if p.first.first == category
+          products[index] = filter_requirements(p, requirement)
+        end
+      end
     end
 
-    j = 0
     products.each do |category|
       cat, products = category.first
 
@@ -44,15 +44,9 @@ class BuildController < ApplicationController
       end
 
       self.components[cat] = products[i]
-
-      break if j > 10
     end
 
-    return components
-
-    # pro
-
-    # for each product category is compatatible?
+    components
   end
 
   def is_compatible(components, category, product)
@@ -67,22 +61,24 @@ class BuildController < ApplicationController
         return false
       end
 
+      if category == 'cpu' && components['motherboard']['socket'] != product['socket']
+        return false
+      end
+
       # if category == 'video_card' && components.has_key?('motherboard')
       #   return false
       # end
 
-      # if category == 'cpu' && components['motherboard']['socket'] != product['socket']
-      #   return false
-      # end
-
-      return true
+      true
     end
   end
 
-  def filter_requirements(category, requirements)
-    requirements.each do |key, req|
-      # if key != req @category remove from products
+  def filter_requirements(products, requirements)
+    JSON.parse(requirements).each do |key, value|
+      products.values[0].delete_if { |p| p[key] != value }
     end
+
+    products
   end
 end
 
