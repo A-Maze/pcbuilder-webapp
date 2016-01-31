@@ -3,17 +3,22 @@
 Zoek
 </div>
 
-	<form ng-controller="searchController" ng-submit="search(searchTag)">
-		<label for='searchTag'>Zoekterm</label>
-			<input type='text' name='searchTag' ng-model='searchTag' />
-		<br>
-		<input type='submit' value='Zoek' />
-	</form>
+	
+
+	<div class="container" ng-controller="searchController">
+	    <div class="col-md-12">
+	        <form ng-submit="submitform()" ng-controller="searchController">
+	            <input type='text' name='searchTag' ng-model='searchTag'>
+	            <input type="submit">
+	        </form>
+	    </div>
+	</div>
+
+
 	<hr size=1>
-		<div>
-			<div style='max-height: 200px; overflow-y: auto;'>
-				<div class="container" ng-controller="searchController">
-					<h1> {{ params }} </h1>
+			<div ng-controller="searchController">
+				<h1> {{ params }} </h1>
+				<div style='max-height: 200px; overflow-y: auto;'>
 					<div ng-repeat="product in products">
 						<a href='/dashboard/{{ product._id }}/{{ product.category }}'>
 							<div>
@@ -23,6 +28,5 @@ Zoek
 					</div>
 				</div>
 			</div>
-		</div>
 	
 </div>
