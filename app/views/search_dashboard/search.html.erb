@@ -1,0 +1,35 @@
+<div class="outer_box">
+<div class="title_box">
+Zoek
+</div>
+	<form>
+		<label for='categorie'>Categorie</label>
+			<select>
+			  <option value="cpu">Processor</option>
+			  <option value="motherboard">Moederbord</option>
+			  <option value="cooler">Koeler</option>
+			  <option value="case">Behuizing</option>
+			  <option value="optical_drive">Optische schijf</option>
+			  <option value="video_card">Video kaart</option>
+			  <option value="hard_drive">Harde schijf</option>
+			  <option value="memory">Geheugen</option>
+			  <option value="power_supply">Voeding</option>
+			</select>
+		<br>
+		<label for='zoekterm'>Zoekterm</label>
+			<input type='text' name='zoekterm' />
+		<br>
+		<input type='submit' value='Zoek' />
+	</form>
+	<% if params[:zoekterm] %>
+		<hr size=1>
+		<div>
+			<h1><%= params[:zoekterm] %></h1>
+			<div style='max-height: 200px; overflow-y: auto;'>
+			<% @products.each do |product| %>
+				<a href='/dashboard/<%= get_id(product["_id"]) %>/<%= get_category(product["category"]) %>'><li><%= product['name'] %> - <%= product["category"] %></li></a>
+			<% end %>
+			</div>
+		</div>
+	<% end %>
+</div>
