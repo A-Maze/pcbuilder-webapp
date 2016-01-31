@@ -1,0 +1,111 @@
+<script>
+dashboard = angular.module('pcbuilder', []);
+
+dashboard.controller("productController", ['$scope', '$http', function ($scope, $http) {
+  var pathArray = window.location.pathname.split( '/' );
+  var prices;
+  var Array3 = Array();
+
+  $http.get("/api/dashboard/"+pathArray[pathArray.length-2]+"/"+pathArray[pathArray.length-1]).success(function (data) {
+    $scope.product = data;
+    prices = data.webshopprijzen;
+    //alert(prices);
+    laadGrafiek();
+  });
+
+
+
+  
+  function laadGrafiek(){
+  	var Array2 = Array();
+  	var combinatie = Array();
+  	var combinatie2 = Array();
+  	var combinatie3 = Array();
+  	var datumArray = Array();
+  	var combinationArray = Array();
+  	var done = false;
+  	for(var i = 0 ; i < prices.length ; i ++){
+  		if(datumArray.indexOf(prices[i].date) == -1){
+  			datumArray[datumArray.length] = prices[i].date;
+  		}
+  	}
+
+
+  	for(var i = 0 ; i < prices.length ; i ++){
+  		combinatie2[combinatie2.length] = [prices[i].webshop, prices[i].price, prices[i].date]
+  	}
+
+  	for(var i = 0 ; i < datumArray.length ; i ++ ){
+  		Array2[0] = datumArray[i];
+  		for(var j = 0 ; j < combinatie2.length ; j ++ ){
+  			if(datumArray[i] == combinatie2[j][2]){
+				Array2.push(combinatie2[j]);
+  			}
+  		}
+  		Array3[Array3.length] = Array2;
+  		Array2 = [];
+  		console.log(Array3[Array3.length]);
+  	}
+  	drawChart(Array3);
+  }
+  
+
+  google.charts.load('current', {'packages':['corechart']});
+      google.charts.setOnLoadCallback(drawChart);
+      function drawChart() {
+        var data = google.visualization.arrayToDataTable([
+          ['datum', 'azerty', 'afuture', 'computerland'],
+          //['1995',  Array3[0][1][2],   Array3[0][2][2],   Array3[0][3][2]],
+          ['1996',  1170,   100,    1170-460],
+          ['1997',  660,    100,    660-1120],
+          ['1998',  1170,   100,    1170-460],
+          ['1999',  660,    100,    660-1120],
+          ['2000',  1170,   100,   1170-460],
+          ['2001',  660,    100,    660-1120],
+          ['2002',  1170,   100,    1170-460],
+          ['2003',  660,    100,    660-1120],
+          ['2004',  1170,   100,    1170-460]
+        ]);
+
+        var options = {
+          title: 'Prijsverloop',
+          curveType: 'function',
+          legend: { position: 'bottom' }
+        };
+
+        var chart = new google.visualization.LineChart(document.getElementById('curve_chart'));
+
+        chart.draw(data, options);
+      }
+      
+
+}]);
+</script>
+<script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+
+<script>
+			
+		</script>
+
+
+
+
+<div ng-controller="productController">
+	
+	<div class="outer_box">
+		<div class="title_box">
+		{{ product.name }}
+		</div>
+
+		<div style='max-height: 200px; overflow-y: auto;'>
+				<div>
+					
+				</div>
+		</div>
+
+		<div id="curve_chart" class="line_chart"></div>
+	</div>
+</div>
+
+
+<script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>

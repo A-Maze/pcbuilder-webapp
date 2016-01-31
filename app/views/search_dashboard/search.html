@@ -20,7 +20,7 @@ Zoek
 				<h1> {{ params }} </h1>
 				<div style='max-height: 200px; overflow-y: auto;'>
 					<div ng-repeat="product in products">
-						<a href='/dashboard/{{ product._id }}/{{ product.category }}'>
+						<a ng-href='/dashboard/{{ product._id.$oid }}/{{ product.category }}'>
 							<div>
 								{{ product.name }}
 							</div>

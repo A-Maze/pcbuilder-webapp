@@ -10,6 +10,8 @@ Rails.application.routes.draw do
   get 'search/:zoekterm', to: 'search_dashboard#search'
   get 'api/search/:zoekterm', to: 'search_dashboard#getSearch'
 
+  get 'api/dashboard/:id/:cat_name', to: 'dashboard#getData'
+
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
 

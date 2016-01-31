@@ -1,6 +1,6 @@
-pcbuilder = angular.module('pcbuilder', []);
+search = angular.module('pcbuilder', []);
 
-pcbuilder.controller("searchController", ['$scope', '$http', function ($scope, $http) {
+search.controller("searchController", ['$scope', '$http', function ($scope, $http) {
 	var pathArray = window.location.pathname.split( '/' );
 	var path = pathArray[pathArray.length-1];
 
