@@ -1,7 +1,7 @@
 class SearchDashboardController < ApplicationController
 	helper_method :get_id
 	helper_method :get_category
-	def search
+	def getSearch
 		if(params[:zoekterm])
 			json = JSON.parse(Net::HTTP.get(URI.parse('http://178.62.245.211:6543/product?searchterm='+params[:zoekterm])))
 			p json.length
@@ -10,6 +10,7 @@ class SearchDashboardController < ApplicationController
 			(1..(json.length-1)).each do |i|
 				@products = @products+json[i]['products']
 			end
+			render json: @products
 
 			#p @products
 		end
