@@ -25,14 +25,37 @@ pcbuilder.controller("PcbuilderController", ['$scope', '$http', function ($scope
                 var columnCount = $("$build-result").find("tr:first td").length;
                 $("#build-result tbody").append('<tr><td colspan="' + columnCount + '">---</td></tr>');
             } else {
-                // for data
-                var row = $('<tr>').append('<td>1</td><td>Category</td><td>Title</td><td>99,99</td>');
-                $("#build-result tbody").append(row);
+                var i = 0;
+                $.each(data, function (category, component) {
+                    i++;
+
+                    var row = $("<tr>");
+                    $("<td>").text(i).appendTo(row);
+                    $("<td>").text(category).appendTo(row);
+                    $("<td>").text(component['brand'] + " " + component['name']).appendTo(row);
+
+                    var url = $('<a>').attr('href', '#').append("€ " + "99,99");
+                    $("<td>").append(url).appendTo(row);
+
+                    $("#build-result tbody").append(row);
+                });
             }
         }).error(function () {
             $("#components").html(failed);
             $("#build-error").append(" of wijzig uw criteria voor de samenstelling.");
         });
+    };
+
+    function getName(category) {
+        $http.get("/api/categories").success(function (data) {
+            for (var i = 0; i < data['categories'].length; i++) {
+                var cat = data['categories'][i];
+                if (cat['locale']['nl_NL'] == category) {
+                    return cat['locale']['nl_NL'];
+                }
+            }
+        });
+        return null;
     }
 }]);
 
