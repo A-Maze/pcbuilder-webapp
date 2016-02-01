@@ -56,21 +56,22 @@ class BuildController < ApplicationController
       true
     else
       if category == 'motherboard'
+
         if components['memory']
           if components['memory']['memory_type'] != product['memory_type']
             return false
           end
+        end
 
-          if components['case']
-            if components['case']['form_factor'] != product['Moederbord formaat']
-              return false
-            end
+        if components['case']
+          if components['case']['form_factor'] != product['Moederbord formaat']
+            return false
           end
+        end
 
-          if components['cpu']
-            if components['cpu']['socket'] != product['socket']
-              return false
-            end
+        if components['cpu']
+          if components['cpu']['socket'] != product['socket']
+            return false
           end
         end
       end
