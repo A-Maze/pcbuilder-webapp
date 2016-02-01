@@ -12,6 +12,10 @@ pcbuilder.controller("PcbuilderController", ['$scope', '$http', function ($scope
         $("#components").html(failed);
     });
 
+    $http.get("/api/categories").success(function (data) {
+        $scope.nameDictionary = data;
+    });
+
     $scope.submitSpecs = function () {
         $http({
             url: "/api/build",
@@ -31,7 +35,7 @@ pcbuilder.controller("PcbuilderController", ['$scope', '$http', function ($scope
 
                     var row = $("<tr>");
                     $("<td>").text(i).appendTo(row);
-                    $("<td>").text(category).appendTo(row);
+                    $("<td>").text(component['category']).appendTo(row);
                     $("<td>").text(component['brand'] + " " + component['name']).appendTo(row);
 
                     var url = $('<a>').attr('href', '#').append("€ " + "99,99");
@@ -47,14 +51,12 @@ pcbuilder.controller("PcbuilderController", ['$scope', '$http', function ($scope
     };
 
     function getName(category) {
-        $http.get("/api/categories").success(function (data) {
-            for (var i = 0; i < data['categories'].length; i++) {
-                var cat = data['categories'][i];
-                if (cat['locale']['nl_NL'] == category) {
-                    return cat['locale']['nl_NL'];
-                }
+        for (var i = 0; i < $scope.nameDictionary['categories'].length; i++) {
+            var cat = $scope.nameDictionary['categories'][i];
+            if (cat['locale']['nl_NL'] == category) {
+                return cat['locale']['nl_NL'];
             }
-        });
+        }
         return null;
     }
 }]);
