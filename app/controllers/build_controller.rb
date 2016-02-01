@@ -34,7 +34,11 @@ class BuildController < ApplicationController
       end
     end
 
-    self.components
+    if self.components.size == self.products.size
+      self.components
+    else
+      nil
+    end
   end
 
   def is_compatible(category, product)

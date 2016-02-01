@@ -1,7 +1,6 @@
 pcbuilder = angular.module('pcbuilder', []);
 
 pcbuilder.controller("PcbuilderController", ['$scope', '$http', function ($scope, $http) {
-    var failed = '<div id="build-error" class="alert alert-danger"><a class="close" data-dismiss="alert">×</a><strong>Error!</strong> Er is iets mis gegaan met het laden van de pagina. Probeer het later opnieuw</div>';
     $(".toggle:visible").toggle();
     $("#components").toggle();
 
@@ -9,6 +8,7 @@ pcbuilder.controller("PcbuilderController", ['$scope', '$http', function ($scope
         $scope.components = data;
         $scope.formData = {};
     }).error(function () {
+        var failed = '<div id="build-error" class="alert alert-danger"><a class="close" data-dismiss="alert">×</a><strong>Error!</strong> Er is iets mis gegaan met het laden van de pagina. Probeer het later opnieuw</div>';
         $("#components").html(failed);
     });
 
@@ -57,8 +57,8 @@ pcbuilder.controller("PcbuilderController", ['$scope', '$http', function ($scope
             }
         }).error(function () {
             waitingDialog.hide();
+            var failed = '<div id="build-error" class="alert alert-danger"><a class="close" data-dismiss="alert">×</a><strong>Error!</strong> Er is geen build kunnen maken met je huidige criteria. Probeer je criteria aan te passen en <a href="/">probeer het opnieuw</a></div>';
             $("#components").html(failed);
-            $("#build-error").append(" of wijzig uw criteria voor de samenstelling.");
         });
     };
 

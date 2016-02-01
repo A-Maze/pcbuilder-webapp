@@ -1,0 +1,216 @@
+{
+  "cooler": {
+    "name": "AV8025 80mm",
+    "Productcode": "AV8025_BULK",
+    "date_modified": {
+      "$date": 1451741034359
+    },
+    "Afmeting": "80 mm",
+    "_id": {
+      "$oid": "5687c15a0b5f961f9dc4b51d"
+    },
+    "records": [],
+    "category": "Casefans",
+    "Toegevoegd aan prijsvergelijker": "maandag 3 november 2014",
+    "brand": "Aerocool"
+  },
+  "case": {
+    "name": "Blitz",
+    "ean": "0854190019027",
+    "Kleur": "Zwart",
+    "Moederbord formaat": "ATX",
+    "date_modified": {
+      "$date": 1451741143175
+    },
+    "Productcode": "BLITZ DT BLACK,                                    BLITZ WB BLACK",
+    "_id": {
+      "$oid": "5687c1c70b5f962489007bea"
+    },
+    "records": [],
+    "category": "Behuizingen",
+    "Vermogen": "0 W",
+    "Toegevoegd aan prijsvergelijker": "maandag 6 april 2009",
+    "brand": "Zegamax"
+  },
+  "optical_drive": {
+    "Diepte": "14 cm",
+    "Slim-line drive": "Ja",
+    "Buffer": "4 MB",
+    "M-Disc ondersteuning": "Nee",
+    "Lezen - BD-ROM": "6 x",
+    "date_modified": {
+      "$date": 1451762813391
+    },
+    "Schrijven - DVD-R": "8 x",
+    "Voeding via USB": "Ja",
+    "records": [],
+    "ean": "8806085990388,                                    0887276693774,                                    8809400851760",
+    "Schrijven - CD-R": "24 x",
+    "Schrijven - BD-R": "6 x",
+    "Schrijven - DVD+RW": "8 x",
+    "name": "SE-506CB White",
+    "Schrijven - BD-RE": "2 x",
+    "Schrijven - CD-RW": "24 x",
+    "Hoogte": "1 cm",
+    "Wit frontje": "Ja",
+    "Lezen - DVD-ROM": "8 x",
+    "Zwart frontje": "Nee",
+    "Schrijven - BD-RE DL": "2 x",
+    "Productcode": "SE-506CB/RSWD,                                    SE-506CB/RSWDE",
+    "_id": {
+      "$oid": "5688166d0b5f963802cb0e18"
+    },
+    "Breedte": "14,8 cm",
+    "category": "Optische drives",
+    "In- / extern": "Extern",
+    "Toegevoegd aan prijsvergelijker": "vrijdag 11 september 2015",
+    "Schrijven - DVD-R DL": "6 x",
+    "brand": "Samsung",
+    "Zilveren frontje": "Nee",
+    "Lezen - CD-ROM": "24 x",
+    "Schrijven - DVD+R": "8 x",
+    "Slot-in drive": "Nee",
+    "Stationtype": "Blu-ray brander",
+    "Interface": "USB 2.0",
+    "Schrijven - DVD+R DL": "6 x",
+    "Lightscribe": "Nee",
+    "Schrijven - DVD-RAM": "5 x",
+    "Toegangstijd": "200 ms",
+    "LabelFlash": "Nee",
+    "Schrijven - BD-R LTH": "6 x",
+    "Schrijven - BD-R DL": "6 x",
+    "OEM": "Nee",
+    "Schrijven - DVD-RW": "6 x"
+  },
+  "cpu": {
+    "cores": "2 cores",
+    "name": "Athlon X2 7750 Black Edition Tray",
+    "x86-64": "Ja",
+    "Uitvoering": "Tray",
+    "Klokfrequentie": "2,7 GHz",
+    "Toegevoegd aan prijsvergelijker": "donderdag 11 november 2010",
+    "date_modified": {
+      "$date": 1451764754712
+    },
+    "Productcode": "AD7750WCJ2BGH",
+    "_id": {
+      "$oid": "56881e020b5f963f032f8a8a"
+    },
+    "records": [],
+    "socket": "Socket AM2",
+    "category": "Processors",
+    "L3-cache": "2 MB",
+    "TDP (Maximaal stroomverbruik)": "95 W",
+    "brand": "AMD"
+  },
+  "video_card": {
+    "DirectX versie": "DirectX 10.0",
+    "GPU": "Nvidia GeForce 8600 GT",
+    "Geheugengrootte": "1.024 MB",
+    "GPU fabrikant": "Nvidia",
+    "date_modified": {
+      "$date": 1451764344273
+    },
+    "records": [],
+    "name": "GeForce 8600 GT 1GB DDR2",
+    "Low profile": "Nee",
+    "card_interface": "PCI-Express x16",
+    "Geheugentype": "DDR2",
+    "GPU serie": "Nvidia GeForce 8",
+    "Productcode": "ZT-86TEK2P-FSL",
+    "_id": {
+      "$oid": "56881c680b5f963a4a372d8d"
+    },
+    "category": "Videokaarten",
+    "Toegevoegd aan prijsvergelijker": "donderdag 26 juni 2008",
+    "brand": "Zotac"
+  },
+  "hard_drive": {
+    "name": "ZIF SSD MLC 64GB",
+    "ean": "0760557815433",
+    "Gemiddelde prijs per gigabyte": "€ 1,588 / GB",
+    "Rotatiesnelheid": "0 rpm",
+    "date_modified": {
+      "$date": 1451764651443
+    },
+    "Productcode": "TS64GPSSD-M",
+    "type": "SSD",
+    "capacity": "64 GB",
+    "_id": {
+      "$oid": "56881d9b0b5f963a4a372ec8"
+    },
+    "records": [],
+    "category": "Harddisks/SSD's",
+    "Toegevoegd aan prijsvergelijker": "vrijdag 15 mei 2015",
+    "brand": "Transcend",
+    "Type flashgeheugen": "Multi-level cell"
+  },
+  "motherboard": {
+    "name": "AN52S",
+    "form_factor": "ATX",
+    "date_modified": {
+      "$date": 1451742769381
+    },
+    "Productcode": "AN52S",
+    "memory_type": "DDR2",
+    "_id": {
+      "$oid": "5687c8210b5f9629d698dfc5"
+    },
+    "records": [],
+    "socket": "Socket AM2",
+    "category": "Moederborden",
+    "Toegevoegd aan prijsvergelijker": "maandag 10 maart 2008",
+    "brand": "ABIT"
+  },
+  "memory": {
+    "EPP / nVidia SLI Memory ondersteuning": "Nee",
+    "ean": "0760557806097",
+    "Opgegeven CAS latency": "CL5",
+    "name": "4GB DDR2-667 CL5 Sodimm kit",
+    "date_modified": {
+      "$date": 1451744991380
+    },
+    "Kit van meerdere modules": "Ja",
+    "records": [],
+    "ECC": "Nee",
+    "Opgegeven klokfrequentie": "667 MHz",
+    "Aantal modules in kit": "2 x",
+    "Registered": "Nee",
+    "XMP ondersteuning": "Nee",
+    "Capaciteit (totaal)": "4 GB",
+    "Productcode": "JM667QSU-4GK",
+    "memory_type": "DDR2",
+    "Opgegeven voltage": "1,8 V",
+    "_id": {
+      "$oid": "5687d0cf0b5f9629d698e5a4"
+    },
+    "Type module": "SODIMM",
+    "category": "Geheugenmodules",
+    "Toegevoegd aan prijsvergelijker": "zaterdag 19 juli 2008",
+    "brand": "Transcend"
+  },
+  "power_supply": {
+    "Diepte": "14,5 cm",
+    "ean": "4711213443213",
+    "Certificering": "80 Plus Gold",
+    "date_modified": {
+      "$date": 1451741100817
+    },
+    "Modulair": "Nee",
+    "records": [],
+    "Serial ATA": "4",
+    "name": "Golden Green HX 350W",
+    "Continu vermogen": "350 W",
+    "Form factor": "ATX",
+    "Standaard molex": "3",
+    "Productcode": "SF-350P14XE (HX)",
+    "6/8 pins PEG": "2",
+    "_id": {
+      "$oid": "5687c19c0b5f961f9dc4b526"
+    },
+    "category": "Voedingen",
+    "Moederbord connector": "20 / 24 pins",
+    "Toegevoegd aan prijsvergelijker": "woensdag 20 augustus 2014",
+    "brand": "Super Flower"
+  }
+}
