@@ -22,12 +22,20 @@ class BuildController < ApplicationController
   def get_build(product_categories, requirements)
     product_categories = filter(product_categories, requirements)
 
+    first_pick_category = 'motherboard'
+    product_categories.each do |product_category|
+      if first_pick_category ==  product_category['category_name']
+        motherboard = product_category['products'].first
+        self.components[first_pick_category] = motherboard
+      end
+    end
+
     product_categories.each do |product_category|
       category = product_category['category_name']
       products = product_category['products']
 
       products.each do |product|
-        if is_compatible(category, product)
+        if is_compatible(category, product) && category != first_pick_category
           self.components[category] = product
           break
         end
@@ -115,7 +123,6 @@ class BuildController < ApplicationController
         end
       end
     end
-
     products
   end
 end
