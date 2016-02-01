@@ -14,6 +14,10 @@ pcbuilder.controller("PcbuilderController", ['$scope', '$http', function ($scope
 
     $http.get("/api/categories").success(function (data) {
         $scope.nameDictionary = data;
+
+        $.each($scope.components, function (index, component) {
+            $scope.components[index]['name'] = getName(component['category']);
+        });
     });
 
     $scope.submitSpecs = function () {
@@ -30,7 +34,7 @@ pcbuilder.controller("PcbuilderController", ['$scope', '$http', function ($scope
 
             if (data.length == 0) {
                 var columnCount = $("$build-result").find("tr:first td").length;
-                $("#build-result tbody").append('<tr><td colspan="' + columnCount + '">---</td></tr>');
+                $("#build-result").find("tbody").append('<tr><td colspan="' + columnCount + '">---</td></tr>');
             } else {
                 var i = 0;
                 var totalPrice = 0;
@@ -46,10 +50,10 @@ pcbuilder.controller("PcbuilderController", ['$scope', '$http', function ($scope
                     var url = $('<a>').attr('href', '#').append("€ " + "99,99"); // PRICE
                     $("<td>").append(url).appendTo(row);
 
-                    $("#build-result tbody").append(row);
+                    $("#build-result").find("tbody").append(row);
                 });
 
-                $("#build-result tfoot #total-price").text("€ " + totalPrice);
+                $("#build-result").find("tfoot #total-price").text("€ " + totalPrice);
             }
         }).error(function () {
             waitingDialog.hide();
@@ -61,7 +65,7 @@ pcbuilder.controller("PcbuilderController", ['$scope', '$http', function ($scope
     function getName(category) {
         for (var i = 0; i < $scope.nameDictionary['categories'].length; i++) {
             var cat = $scope.nameDictionary['categories'][i];
-            if (cat['locale']['nl_NL'] == category) {
+            if (cat['name'] == category) {
                 return cat['locale']['nl_NL'];
             }
         }
