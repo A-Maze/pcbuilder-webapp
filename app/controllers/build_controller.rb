@@ -12,46 +12,33 @@ class BuildController < ApplicationController
   end
 
   def get_products
-    # products = JSON.parse(Net::HTTP.get(URI.parse(Rails.configuration.api_url + '/product')))
+    products = JSON.parse(Net::HTTP.get(URI.parse(Rails.configuration.api_url + '/product')))
     products.each do |product|
       product['product_schema'] = JSON.parse(product['product_schema'])
     end
   end
 
 
-  def get_build(products, requirements)
+  def get_build(product_categories, requirements)
+    product_categories = filter(product_categories, requirements)
 
-    products = filter(products, requirements)
+    product_categories.each do |product_category|
+      category = product_category['category_name']
+      products = product_category['products']
 
-    return products
-    requirements.each do |category, requirement|
-      products.each_with_index do |product_category, index|
-        if product_category['category_name'] == category
-          products[index]['products'] = filter_requirements(product_category['products'], requirement)
+      products.each do |product|
+        if is_compatible(category, product)
+          self.components[category] = product
+          break
         end
       end
     end
 
-
-    products.each do |product_category|
-      category = product_category['category_name']
-      products = product_category['products']
-
-      i = 0
-      loop do
-        break if is_compatible(self.components, category, products[i])
-        i += 1
-
-        break if i > 10
-      end
-
-      self.components[category] = products[i]
-    end
-
-    components
+    self.components
   end
 
-  def is_compatible(components, category, product)
+  def is_compatible(category, product)
+    components = self.components
     if components.empty?
       true
     else
@@ -102,26 +89,19 @@ class BuildController < ApplicationController
     end
   end
 
-  def filter_requirements(products, requirements)
-    JSON.parse(requirements).each do |key, value|
-      if value
-        products.delete_if { |p| p[key] != value }
-      end
-    end
-
-    products
-  end
-
   def filter(products, requirements)
     # For each category get the requirements
     requirements.each do |category, category_requirements|
 
       # For each category parse the requirements
       JSON.parse(category_requirements).each do |requirement, value|
+        # If value not null
         if value
 
-          # For each requirement find other categorys having the same field (for example: memory_type -> motherboard and memory)
+          # For each requirement find other categories having the same field (for example: memory_type -> motherboard and memory)
           products.each do |product_category|
+
+            # For each required field
             product_category['product_schema']['required'].each do |req|
               if requirement == req
                 product_category['products'].delete_if { |p| p[requirement] != value }
