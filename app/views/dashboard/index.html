@@ -21,34 +21,45 @@ search.controller("productController", ['$scope', '$http', function ($scope, $ht
     var dateArray = Array();
     var webshopArray = Array();
     var row = Array();
-    var prijs;
+    var price;
+
+    //Ophalen van de datums, voor elke datum 1 rij
     for(var i = 0 ; i < prices.length ; i ++){
       if(dateArray.indexOf(prices[i].date.split(" ")[0]) == -1){
-        prijs = prices[i].date.split(" ");
-        dateArray[dateArray.length] = prijs[0];
+        price = prices[i].date.split(" ");
+        dateArray[dateArray.length] = price[0];
       }
     }
-    dateArray.sort(function(a, b){
-      var aa = a.split('/').reverse().join(),
-          bb = b.split('/').reverse().join();
-      return aa < bb ? -1 : (aa > bb ? 1 : 0);
-  });
 
+    //Sorteren van de datums oplopend
+    dateArray.sort(function(a, b){
+        var datum1 = a.split('/').reverse().join(),
+            datum2 = b.split('/').reverse().join();
+        return datum1 < datum2 ? -1 : (datum1 > datum2 ? 1 : 0);
+    });
+
+    // Array maken met alle webshops
+    // Array maken met de prijs en de webshop gecombineerd 
+    //Two dimensional Array
     for(i = 0 ; i < prices.length ; i ++){
       if(webshopArray.indexOf(prices[i].webshop) == -1){
         webshopArray[webshopArray.length] = prices[i].webshop;
       }
-    }
-
-    for(i = 0 ; i < prices.length ; i ++){
       priceWebshop[priceWebshop.length] = [prices[i].webshop, prices[i].price, prices[i].date.split(" ")[0]]
     }
+    
+    // Eerste rij in de grafiek, waar staan de waardes voor, datum en webshop namen
+    // Voorbeeld: ['Date', 'Azerty', 'Afuture', 'Computerland']
     column[0] = 'Date';
     for(i = 0 ; i < webshopArray.length ; i ++){
       column[column.length] = webshopArray[i];
     }
     row[0] = column;
     column=[];
+
+    // De rijen toevoegen
+    // Two dimensional array 
+    // voorbeeld: ['01-01-2016', 168.50, 166.95, 172.50]
     for(i = 0 ; i < dateArray.length ; i ++ ){
       column[0] = dateArray[i];
       for(var j = 0 ; j < priceWebshop.length ; j ++ ){
@@ -59,7 +70,8 @@ search.controller("productController", ['$scope', '$http', function ($scope, $ht
       row[row.length] = column;
       column = [];
     }
-    console.log(row);
+
+    // Plaats de rijen in de grafiek
     var data = google.visualization.arrayToDataTable(row);
 
     var options = {

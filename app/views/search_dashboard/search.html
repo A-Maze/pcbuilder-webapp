@@ -5,9 +5,9 @@ Zoek
 
 	
 
-<div class="container" ng-controller="productController">
+<div class="container" ng-controller="searchController">
     <div class="col-md-12">
-        <form ng-submit="submitform()" ng-controller="productController">
+        <form ng-submit="submitform()" ng-controller="searchController">
             <input type='text' name='searchTag' ng-model='searchTag'>
             <input type="submit">
         </form>
@@ -16,7 +16,7 @@ Zoek
 
 
 <hr size=1>
-<div ng-controller="productController">
+<div ng-controller="searchController">
 	<h1> {{ params }} </h1>
 	<div style='max-height: 200px; overflow-y: auto;'>
 		<div ng-repeat="product in products">
