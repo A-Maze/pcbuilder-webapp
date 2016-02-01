@@ -5,28 +5,28 @@ Zoek
 
 	
 
-	<div class="container" ng-controller="searchController">
-	    <div class="col-md-12">
-	        <form ng-submit="submitform()" ng-controller="searchController">
-	            <input type='text' name='searchTag' ng-model='searchTag'>
-	            <input type="submit">
-	        </form>
-	    </div>
-	</div>
+<div class="container" ng-controller="productController">
+    <div class="col-md-12">
+        <form ng-submit="submitform()" ng-controller="productController">
+            <input type='text' name='searchTag' ng-model='searchTag'>
+            <input type="submit">
+        </form>
+    </div>
+</div>
 
 
-	<hr size=1>
-			<div ng-controller="searchController">
-				<h1> {{ params }} </h1>
-				<div style='max-height: 200px; overflow-y: auto;'>
-					<div ng-repeat="product in products">
-						<a ng-href='/dashboard/{{ product._id.$oid }}/{{ product.category }}'>
-							<div>
-								{{ product.name }}
-							</div>
-						</a>
-					</div>
+<hr size=1>
+<div ng-controller="productController">
+	<h1> {{ params }} </h1>
+	<div style='max-height: 200px; overflow-y: auto;'>
+		<div ng-repeat="product in products">
+			<a ng-href='/dashboard/{{ product._id.$oid }}/{{ product.category }}'>
+				<div>
+					{{ product.name }}
 				</div>
-			</div>
+			</a>
+		</div>
+	</div>
+</div>
 	
 </div>
