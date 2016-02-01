@@ -17,11 +17,14 @@ pcbuilder.controller("PcbuilderController", ['$scope', '$http', function ($scope
     });
 
     $scope.submitSpecs = function () {
+        waitingDialog.show();
+
         $http({
             url: "/api/build",
             method: "GET",
             params: $scope.formData
         }).success(function (data) {
+            waitingDialog.hide();
             $(".toggle:visible").toggle();
             $("#build").toggle();
 
@@ -49,6 +52,7 @@ pcbuilder.controller("PcbuilderController", ['$scope', '$http', function ($scope
                 $("#build-result tfoot #total-price").text("€ " + totalPrice);
             }
         }).error(function () {
+            waitingDialog.hide();
             $("#components").html(failed);
             $("#build-error").append(" of wijzig uw criteria voor de samenstelling.");
         });
