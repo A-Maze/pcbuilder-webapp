@@ -30,19 +30,23 @@ pcbuilder.controller("PcbuilderController", ['$scope', '$http', function ($scope
                 $("#build-result tbody").append('<tr><td colspan="' + columnCount + '">---</td></tr>');
             } else {
                 var i = 0;
+                var totalPrice = 0;
                 $.each(data, function (category, component) {
                     i++;
+                    totalPrice += 99.99; // PRICE
 
                     var row = $("<tr>");
                     $("<td>").text(i).appendTo(row);
                     $("<td>").text(component['category']).appendTo(row);
                     $("<td>").text(component['brand'] + " " + component['name']).appendTo(row);
 
-                    var url = $('<a>').attr('href', '#').append("€ " + "99,99");
+                    var url = $('<a>').attr('href', '#').append("€ " + "99,99"); // PRICE
                     $("<td>").append(url).appendTo(row);
 
                     $("#build-result tbody").append(row);
                 });
+
+                $("#build-result tfoot #total-price").text("€ " + totalPrice);
             }
         }).error(function () {
             $("#components").html(failed);

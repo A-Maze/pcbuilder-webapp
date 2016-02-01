@@ -6,7 +6,7 @@
                     <div class="panel-heading">
                         <div style="text-align: center;">{{ component.name }}</div>
                     </div>
-                    <div class="panel-body" data-toggle="collapse" data-parent="#accordion" data-target="#{{ component.category }}">
+                    <div class="panel-body glyphicon-text-height" data-toggle="collapse" data-parent="#accordion" data-target="#{{ component.category }}">
                         <a><img class="center-block" ng-src="/assets/icon-{{ component.category }}.png"></a>
                     </div>
                     <div id="{{ component.category }}" class="panel-collapse collapse">
@@ -41,12 +41,9 @@
         </tr>
         </thead>
         <tbody>
-        <!--<tr class="text-center">-->
-            <!--<td colspan="4">-&#45;&#45;</td>-->
-        <!--</tr>-->
         </tbody>
         <tfoot>
-            <tr><th></th><th></th><th></th><th>Totaal: </th></tr>
+            <tr><th></th><th></th><th></th><th id="total-price">Totaal: </th></tr>
         </tfoot>
     </table>
 </div>
