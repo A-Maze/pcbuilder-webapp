@@ -4,9 +4,17 @@ require 'json'
 class HomeController < ApplicationController
   def get_components_structure
     result = Net::HTTP.get(URI.parse(Rails.configuration.api_url + '/product/filters'))
-    @components = JSON.parse(result)
+    components = JSON.parse(result)
 
-    render json: @components
+    JSON.parse(get_categorie_names)['categories'].each do |category|
+      components.each do |component|
+        if component['category'] == category['name']
+          component['name'] = category['locale']['nl_NL']
+        end
+      end
+    end
+
+    render json: components
   end
 
   def get_build
@@ -24,6 +32,6 @@ class HomeController < ApplicationController
 
   def get_categorie_names
     url = URI.parse(Rails.configuration.api_url + '/category')
-    render json: Net::HTTP.get(url)
+    Net::HTTP.get(url).as_json
   end
 end
