@@ -7,8 +7,6 @@ class BuildController < ApplicationController
     self.components = Hash.new
     self.requirements = requirements
     self.products = get_products
-
-    get_build(self.products, self.requirements)
   end
 
   def get_products
@@ -20,9 +18,11 @@ class BuildController < ApplicationController
 
 
   def get_build(product_categories, requirements)
-    product_categories = filter(product_categories, requirements)
+    if requirements
+      product_categories = filter(product_categories, requirements)
+    end
 
-    first_pick_category = 'motherboard'
+    first_pick_category = Rails.configuration.build_first_component
     product_categories.each do |product_category|
       if first_pick_category ==  product_category['category_name']
         motherboard = product_category['products'].first
@@ -34,10 +34,25 @@ class BuildController < ApplicationController
       category = product_category['category_name']
       products = product_category['products']
 
-      products.each do |product|
-        if is_compatible(category, product) && category != first_pick_category
-          self.components[category] = product
-          break
+      if self.components[category].nil?
+        stuck_at_category = 0
+        products.each do |product|
+          compatible, not_compatible_at_category = is_compatible(category, product)
+
+          if compatible
+            self.components[category] = product
+            stuck_at_category = nil
+            break
+          else
+            stuck_at_category = not_compatible_at_category
+          end
+        end
+
+        if stuck_at_category
+          product_categories = remove_product(stuck_at_category, self.components[stuck_at_category], product_categories)
+          self.components.delete(stuck_at_category)
+
+          get_build(product_categories, nil)
         end
       end
     end
@@ -52,44 +67,44 @@ class BuildController < ApplicationController
   def is_compatible(category, product)
     components = self.components
     if components.empty?
-      true
+      return true, nil
     else
       if category == 'motherboard'
 
         if components['memory']
           if components['memory']['memory_type'] != product['memory_type']
-            return false
+            return false, 'memory'
           end
         end
 
         if components['case']
           if components['case']['form_factor'] != product['Moederbord formaat']
-            return false
+            return false, 'case'
           end
         end
 
         if components['cpu']
           if components['cpu']['socket'] != product['socket']
-            return false
+            return false, 'cpu'
           end
         end
       end
 
       if category == 'memory' && components['motherboard']
         if components['motherboard']['memory_type'] != product['memory_type']
-          return false
+          return false, 'motherboard'
         end
       end
 
       if category == 'case' && components['motherboard']
         if components['motherboard']['form_factor'] != product['Moederbord formaat']
-          return false
+          return false, 'motherboard'
         end
       end
 
       if category == 'cpu' && components['motherboard']
         if components['motherboard']['socket'] != product['socket']
-          return false
+          return false, 'motherboard'
         end
       end
 
@@ -97,8 +112,19 @@ class BuildController < ApplicationController
       #   return false
       # end
 
-      true
+      return true, nil
     end
+  end
+
+  def remove_product(stuck_at_category, product, product_categories)
+    product_categories.each do |product_category|
+      category = product_category['category_name']
+
+      if category == stuck_at_category
+        product_category['products'].delete_if { |p| p == product }
+      end
+    end
+    product_categories
   end
 
   def filter(products, requirements)
