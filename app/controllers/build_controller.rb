@@ -108,10 +108,6 @@ class BuildController < ApplicationController
         end
       end
 
-      # if category == 'video_card' && components.has_key?('motherboard')
-      #   return false
-      # end
-
       return true, nil
     end
   end
