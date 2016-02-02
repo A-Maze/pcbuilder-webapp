@@ -38,4 +38,8 @@ Rails.application.configure do
 
   # Raises error for missing translations
   # config.action_view.raise_on_missing_translations = true
+
+  config.api_url = 'http://95.85.12.99:6543'
+  config.build_first_component = 'motherboard'
+
 end
