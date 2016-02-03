@@ -50,7 +50,7 @@ class BuildController < ApplicationController
         end
 
         if stuck_at_category && times_stuck < 100
-          times_stuck += 1
+          self.times_stuck += 1
           product_categories = remove_product(stuck_at_category, self.components[stuck_at_category], product_categories)
           self.components.delete(stuck_at_category)
 
