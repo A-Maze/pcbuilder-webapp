@@ -1,12 +1,13 @@
 require 'json'
 
 class BuildController < ApplicationController
-  attr_accessor :products, :requirements, :components
+  attr_accessor :products, :requirements, :components, :times_stuck
 
   def initialize(requirements)
     self.components = Hash.new
     self.requirements = requirements
     self.products = get_products
+    self.times_stuck = 0
   end
 
   def get_products
@@ -48,7 +49,8 @@ class BuildController < ApplicationController
           end
         end
 
-        if stuck_at_category
+        if stuck_at_category && times_stuck < 100
+          times_stuck += 1
           product_categories = remove_product(stuck_at_category, self.components[stuck_at_category], product_categories)
           self.components.delete(stuck_at_category)
 
