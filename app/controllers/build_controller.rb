@@ -7,7 +7,7 @@ class BuildController < ApplicationController
     self.components = Hash.new
     self.requirements = requirements
     self.offset = 0
-    self.limit = 2
+    self.limit = 10
     self.products = get_products
     self.times_stuck = 0
   end
@@ -186,7 +186,7 @@ class BuildController < ApplicationController
   end
 
   def add_products(product_category)
-    self.offset += 2
+    self.offset += 10
 
     params = {'limit' => self.limit, 'offset' => self.offset}#, 'for_sale' => false}
     url = Rails.configuration.api_url + '/category/' + product_category['category_name'] + '?' + URI.encode_www_form(params)
