@@ -23,7 +23,7 @@ Zoek
 			<div ng-repeat="product in products">
 				<div ng-repeat="category in category">
 					<div ng-if="category.locale.nl_NL == product.category">
-						<a class='search-result' ng-href='/dashboard/{{ category._id.$oid }}/{{ category.name }}'>
+						<a class='search-result' ng-href='/dashboard/{{ product._id.$oid }}/{{ category.name }}'>
 							<div class="text-muted search-text-div">
 								<h1>{{ product.brand }} - {{ product.name }}</h1>{{ check(product.category) }}
 								<h5>{{ product.category }}</h5>

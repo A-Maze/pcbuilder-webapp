@@ -44,15 +44,17 @@ search.controller("dashboardController", ['$scope', '$http', function ($scope, $
     }
 
     //Sorteren van de datums oplopend
-    dateArray.sort(function(a, b){
+    /*dateArray.sort(function(a, b){
         var datum1 = a.split('/').reverse().join(),
             datum2 = b.split('/').reverse().join();
         return datum1 < datum2 ? -1 : (datum1 > datum2 ? 1 : 0);
-    });
+    });*/
 
     // Array maken met alle webshops
     // Array maken met de prijs en de webshop gecombineerd 
     // Two dimensional Array
+
+    console.log(prices);
     for(i = 0 ; i < prices.length ; i ++){
       if(webshopArray.indexOf(prices[i].webshop) == -1){
         webshopArray[webshopArray.length] = prices[i].webshop;
@@ -63,7 +65,6 @@ search.controller("dashboardController", ['$scope', '$http', function ($scope, $
     // Eerste rij in de grafiek, waar staan de waardes voor, datum en webshop namen
     // Voorbeeld: ['Date', 'Azerty', 'Afuture', 'Computerland']
     var data = new google.visualization.DataTable();
-    //column[0] = 'Date';
     data.addColumn('string', 'Datum');
     for(i = 0 ; i < webshopArray.length ; i ++){
       data.addColumn('number', ''+webshopArray[i]);
