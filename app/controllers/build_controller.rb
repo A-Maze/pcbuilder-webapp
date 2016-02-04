@@ -76,7 +76,7 @@ class BuildController < ApplicationController
       end
     end
 
-    if self.components.size == self.products.size
+    if self.components.size == self.products.size && !has_nil_components(self.components)
       self.components
     else
       nil
@@ -165,6 +165,15 @@ class BuildController < ApplicationController
       end
     end
     products
+  end
+
+  def has_nil_components(components)
+    components.each do |key, comp|
+      if comp.nil?
+        return true
+      end
+    end
+    false
   end
 
   def get_empty_product_categories(product_categories)
