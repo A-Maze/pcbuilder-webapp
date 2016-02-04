@@ -1,0 +1,2 @@
+module SearchDashboardHelper
+end
