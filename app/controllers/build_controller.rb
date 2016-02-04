@@ -37,7 +37,6 @@ class BuildController < ApplicationController
             product_categories[index] = add_products(empty_category)
           end
         end
-        p 'hoi'
       end
     end
 
