@@ -32,14 +32,21 @@ pcbuilder.controller("PcbuilderController", ['$scope', '$http', function ($scope
                 var totalPrice = 0;
                 $.each(data, function (category, component) {
                     i++;
-                    totalPrice += 99.99; // PRICE
+                    var currentPriceKey = Object.keys(component['current_prices'])[0];
+                    var price = component['current_prices'][currentPriceKey];
+
+                    if (!isNaN(price)) {
+                        totalPrice += price;
+                    } else {
+                        price = "Onbekend";
+                    }
 
                     var row = $("<tr>");
                     $("<td>").text(i).appendTo(row);
                     $("<td>").text(component['category']).appendTo(row);
                     $("<td>").text(component['brand'] + " " + component['name']).appendTo(row);
 
-                    var url = $('<a>').attr('href', '#').append("€ " + "99,99"); // PRICE
+                    var url = $('<a>').attr('href', currentPriceKey).append("€ " + price);
                     $("<td>").append(url).appendTo(row);
 
                     $("#build-result").find("tbody").append(row);
