@@ -20,6 +20,7 @@ search.controller("dashboardController", ['$scope', '$http', function ($scope, $
 
   $http.get("/api/dashboard/"+pathArray[2]+"/"+pathArray[3]).success(function (data) {
     $scope.product = data;
+    $scope.keys = data;
     prices = data.webshopprijzen;
   });
 

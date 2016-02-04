@@ -5,6 +5,7 @@
 	margin-right: auto;
 	margin-bottom: 3%;
 	height: 100%;
+	float: left;
 }
 
 .title_box	{
@@ -26,4 +27,21 @@
 
 a.search-result:hover {
 	text-decoration: none;
+}
+
+.detail-outer{
+	width: 100%;
+	height: auto;
+	float: left;
+}
+
+.detail-key {
+	width: 40%;
+	float: left;
+	font-size: 14pt;
+}
+
+.detail-value {
+	width: 60%;
+	float: left;
 }
