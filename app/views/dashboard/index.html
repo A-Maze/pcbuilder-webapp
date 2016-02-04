@@ -1,0 +1,28 @@
+<div class="container">
+<div class="outer_box">
+	<div ng-controller="dashboardController">
+		<div class="title_box">
+		{{ product.name }}
+		</div>
+		<div ng-repeat="(key, data) in keys">
+			<div ng-if="key != 'webshopprijzen'">
+				<div ng-if="key != '_id'">
+					<div ng-if="key != 'date_modified'">
+						<div ng-if="key != 'records'">
+			    			<br><div class="detail-outer"><div class="detail-key">{{ key }}:</div><div class="detail-value"> {{ data.$oid ? data.$oid :  (data.$date ? data.$date : data)}}</div><hr size=1></div>
+		    			</div>
+			    	</div>
+			    </div>
+			</div>
+		</div>
+	</div>
+</div>
+
+<div class="outer_box">
+
+		<div id="curve_chart" class="line_chart"></div>
+</div>
+</div>
+
+<script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+
