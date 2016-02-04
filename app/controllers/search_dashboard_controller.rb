@@ -1,7 +1,7 @@
 class SearchDashboardController < ApplicationController
 	def getSearch
 		if params[:zoekterm]
-			json = JSON.parse(Net::HTTP.get(URI.parse('http://95.85.12.99:6543/product?searchterm='+params[:zoekterm])))
+			json = JSON.parse(Net::HTTP.get(URI.parse('http://95.85.12.99:6543/product?searchterm='+params[:zoekterm]+'&limit=100&offset=0&for_sale=true')))
 			p json.length
 
 			@products = json[0]['products']
@@ -15,17 +15,8 @@ class SearchDashboardController < ApplicationController
 		
 	end
 
-	def get_id(id)
-		@idConverted = id
-		@idConverted = @idConverted['$oid']
-		return @idConverted
-	end
-
-	def get_category(category)
-		@categoryConverted = category
-		if(@categoryConverted == 'CPU-koelers')
-			@categoryConverted = 'cooler'
-		end
-		return @categoryConverted
+	def getCategory
+		category = JSON.parse(Net::HTTP.get(URI.parse('http://95.85.12.99:6543/category?limit=10')))
+		render json: category
 	end
 end

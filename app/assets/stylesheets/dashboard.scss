@@ -4,8 +4,8 @@
 	margin-left: auto;
 	margin-right: auto;
 	margin-bottom: 3%;
-	height: 100%;
-	float: left;
+	min-height: 100%;
+	float:left;
 }
 
 .title_box	{
@@ -44,4 +44,8 @@ a.search-result:hover {
 .detail-value {
 	width: 60%;
 	float: left;
+}
+
+.search-result-div{
+	height: auto;
 }

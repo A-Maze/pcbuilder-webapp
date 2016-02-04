@@ -1,27 +1,27 @@
 search = angular.module('pcbuilder', []);
 
 search.controller("searchController", ['$scope', '$http', function ($scope, $http) {
-  var pathArray = window.location.pathname.split( '/' );
-  var path = pathArray[pathArray.length-1];
-
-  $http.get("/api/search/"+path).success(function (data) {
+  var pathName = window.location.pathname;
+  $http.get("/api"+pathName).success(function (data) {
     $scope.products = data;
-    $scope.formData = {};
-    $scope.params = path;
+  });
+  $http.get("/api/dashboard/category").success(function (category) {
+    $scope.category = category.categories;
   });
   $scope.submitform = function () {
     window.location.href = $scope.searchTag;
-    }
+  }
 }]);
 
-search.controller("dashboardController", ['$scope', '$http', function ($scope, $http) {
-  var pathArray = window.location.pathname.split( '/' );
-  var prices;
 
-  $http.get("/api/dashboard/"+pathArray[2]+"/"+pathArray[3]).success(function (data) {
+
+search.controller("dashboardController", ['$scope', '$http', function ($scope, $http) {
+  var pathName = window.location.pathname;
+
+  $http.get("/api"+pathName).success(function (data) {
     $scope.product = data;
     $scope.keys = data;
-    prices = data.webshopprijzen;
+    prices = data.records;
   });
 
   google.charts.load('current', {'packages':['corechart']});
@@ -37,9 +37,9 @@ search.controller("dashboardController", ['$scope', '$http', function ($scope, $
 
     //Ophalen van de datums, voor elke datum 1 rij
     for(var i = 0 ; i < prices.length ; i ++){
-      if(dateArray.indexOf(prices[i].date.split(" ")[0]) == -1){
-        price = prices[i].date.split(" ");
-        dateArray[dateArray.length] = price[0];
+      if(dateArray.indexOf(prices[i].date/*.split(" ")[0]*/) == -1){
+        price = prices[i].date;//.split(" ");
+        dateArray[dateArray.length] = price;//[0];
       }
     }
 
@@ -57,17 +57,17 @@ search.controller("dashboardController", ['$scope', '$http', function ($scope, $
       if(webshopArray.indexOf(prices[i].webshop) == -1){
         webshopArray[webshopArray.length] = prices[i].webshop;
       }
-      priceWebshop[priceWebshop.length] = [prices[i].webshop, prices[i].price, prices[i].date.split(" ")[0]]
+      priceWebshop[priceWebshop.length] = [prices[i].webshop, prices[i].price, prices[i].date]//.split(" ")[0]]
     }
     
     // Eerste rij in de grafiek, waar staan de waardes voor, datum en webshop namen
     // Voorbeeld: ['Date', 'Azerty', 'Afuture', 'Computerland']
-    column[0] = 'Date';
+    var data = new google.visualization.DataTable();
+    //column[0] = 'Date';
+    data.addColumn('string', 'Datum');
     for(i = 0 ; i < webshopArray.length ; i ++){
-      column[column.length] = webshopArray[i];
+      data.addColumn('number', ''+webshopArray[i]);
     }
-    row[0] = column;
-    column=[];
 
     // De rijen toevoegen
     // Two dimensional array 
@@ -82,9 +82,11 @@ search.controller("dashboardController", ['$scope', '$http', function ($scope, $
       row[row.length] = column;
       column = [];
     }
+    data.addRows(row);
 
     // Plaats de rijen in de grafiek
-    var data = google.visualization.arrayToDataTable(row);
+
+    //data.addRows(row);
 
     var options = {
       title: 'Prijsverloop',

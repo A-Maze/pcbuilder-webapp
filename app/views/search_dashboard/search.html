@@ -19,18 +19,20 @@ Zoek
 <div ng-controller="searchController">
 	<h1>zoekresultaten voor: ' {{ params }} ' </h1>
 	<hr size=1>
-	<div style='max-height: 200px; overflow-y: auto;'>
-		<div ng-repeat="product in products">
-			<a class='search-result' ng-href='/dashboard/{{ product._id.$oid }}/{{ product.category }}'>
-				<div class="text-muted search-text-div">
-                    <img class="center-block" ng-src="/assets/icon-{{ product.category }}.png">
-					<h1>{{ product.name }}</h1>
-					<h5>{{ product.category }}</h5>
+		<div class="search-result-div">
+			<div ng-repeat="product in products">
+				<div ng-repeat="category in category">
+					<div ng-if="category.locale.nl_NL == product.category">
+						<a class='search-result' ng-href='/dashboard/{{ category._id.$oid }}/{{ category.name }}'>
+							<div class="text-muted search-text-div">
+								<h1>{{ product.brand }} - {{ product.name }}</h1>{{ check(product.category) }}
+								<h5>{{ product.category }}</h5>
+							</div>
+						</a>
+					</div>
 				</div>
-			</a>
-			<hr size=1>
+			</div>
 		</div>
-	</div>
 </div>
 	
 </div>
