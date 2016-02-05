@@ -9,12 +9,17 @@ search.controller("searchController", ['$scope', '$http', function ($scope, $htt
     $scope.products = data.products;
   });
   $scope.submitform = function () {
+    if($scope.searchTag){
+      var path = pathName.split('/');
+      if(path.length != 2){
+        window.location.href = $scope.searchTag;
+      }else{
+        window.location.href = 'search/'+$scope.searchTag;
+      }
+    }
     //Zoek naar alle producten met dat zoek woord
-    window.location.href = 'search/'+$scope.searchTag;
   }
 }]);
-
-
 
 search.controller("dashboardController", ['$scope', '$http', function ($scope, $http) {
   var pathName = window.location.pathname;
@@ -102,4 +107,3 @@ search.controller("dashboardController", ['$scope', '$http', function ($scope, $
   }
       
 }]);
-
