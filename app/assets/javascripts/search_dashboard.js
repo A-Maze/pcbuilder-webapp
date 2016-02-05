@@ -79,7 +79,6 @@ search.controller("dashboardController", ['$scope', '$http', function ($scope, $
       row[row.length] = column;
       column = [];
     }
-
     // Plaats de rijen in de grafiek
     data.addRows(row);
 
