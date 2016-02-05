@@ -10,7 +10,7 @@ search.controller("searchController", ['$scope', '$http', function ($scope, $htt
   });
   $scope.submitform = function () {
     //Zoek naar alle producten met dat zoek woord
-    window.location.href = $scope.searchTag;
+    window.location.href = 'search/'+$scope.searchTag;
   }
 }]);
 
@@ -102,3 +102,4 @@ search.controller("dashboardController", ['$scope', '$http', function ($scope, $
   }
       
 }]);
+
