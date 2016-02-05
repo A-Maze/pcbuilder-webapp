@@ -1,9 +1,11 @@
 language: ruby
 rvm:
     - 2.2.1
+    
+sudo: true
 
 install:
-    - sudo npm install -g bower
+    - npm install -g bower
     - bundle install
     - rake bower:install
 
