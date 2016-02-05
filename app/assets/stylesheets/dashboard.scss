@@ -1,0 +1,51 @@
+.outer_box {
+	width: 80%;
+	border: 3px solid #4da5ff;
+	margin-left: auto;
+	margin-right: auto;
+	margin-bottom: 3%;
+	min-height: 100%;
+	float:left;
+}
+
+.title_box	{
+	width: 100%;
+	position: relative;
+	background-color: #4da5ff;
+	color: white;
+	font-weight: bold;
+	font-size: 22pt;
+	text-align: center;
+}
+
+.line_chart {
+	width: auto; 
+	height:500px;
+	margin-left: auto;
+	margin-right: auto;
+}
+
+a.search-result:hover {
+	text-decoration: none;
+}
+
+.detail-outer{
+	width: 100%;
+	height: auto;
+	float: left;
+}
+
+.detail-key {
+	width: 40%;
+	float: left;
+	font-size: 14pt;
+}
+
+.detail-value {
+	width: 60%;
+	float: left;
+}
+
+.search-result-div{
+	height: auto;
+}
