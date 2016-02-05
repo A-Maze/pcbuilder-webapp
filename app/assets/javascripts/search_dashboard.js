@@ -2,37 +2,12 @@ search = angular.module('pcbuilder', []);
 
 search.controller("searchController", ['$scope', '$http', function ($scope, $http) {
   var pathName = window.location.pathname;
-  var categories;
-  $http.get("/api/dashboard/category").success(function (category) {
-    categories = category.categories;
-    $http.get("/api"+pathName).success(function (data) {
-      $scope.products = data;
-    });
+  $http.get("/api"+pathName).success(function (data) {
+    $scope.jsonArray = data;
+    $scope.products = data.products;
   });
-  
   $scope.submitform = function () {
     window.location.href = $scope.searchTag;
-  }
-  $scope.getCategory = function (msg) {
-    for(var i = 0; i <= categories.length ; i ++){
-      if(i == categories.length){
-        if(msg == 'Processors'){
-          return 'cpu';
-        }else if(msg == 'CPU-koelers'){
-          return 'cooler';
-        }else{
-          return msg;
-        }
-      }
-      if(categories[i].locale.nl_NL == msg){
-        return categories[i].name;
-      }
-    }
-        
-  }
-  $scope.log = function (a, b){
-    console.log(a);
-    console.log(b);
   }
 }]);
 
@@ -40,7 +15,7 @@ search.controller("searchController", ['$scope', '$http', function ($scope, $htt
 
 search.controller("dashboardController", ['$scope', '$http', function ($scope, $http) {
   var pathName = window.location.pathname;
-
+  var prices;
   $http.get("/api"+pathName).success(function (data) {
     $scope.product = data;
     $scope.keys = data;
@@ -64,7 +39,6 @@ search.controller("dashboardController", ['$scope', '$http', function ($scope, $
         dateArray[dateArray.length] = dateField;
       }
     }
-
     //Sorteren van de datums oplopend
     dateArray.sort(function(a, b){
         var datum1 = a.split('/').reverse().join(),
@@ -81,7 +55,7 @@ search.controller("dashboardController", ['$scope', '$http', function ($scope, $
       }
       fullDate = new Date(prices[i].date.$date);
       dateField = fullDate.getDate()+'/'+(fullDate.getMonth()+1)+'/'+fullDate.getFullYear();
-      priceWebshop[priceWebshop.length] = [prices[i].webshop, prices[i].price, dateField]//.split(" ")[0]]
+      priceWebshop[priceWebshop.length] = [prices[i].webshop, prices[i].price, dateField];
     }
     
     // Eerste rij in de grafiek, waar staan de waardes voor, datum en webshop namen
@@ -105,20 +79,16 @@ search.controller("dashboardController", ['$scope', '$http', function ($scope, $
       row[row.length] = column;
       column = [];
     }
-    data.addRows(row);
 
     // Plaats de rijen in de grafiek
-
-    //data.addRows(row);
+    data.addRows(row);
 
     var options = {
       title: 'Prijsverloop',
       curveType: 'function',
       legend: { position: 'bottom' }
     };
-
     var chart = new google.visualization.LineChart(document.getElementById('curve_chart'));
-
     chart.draw(data, options);
   }
       

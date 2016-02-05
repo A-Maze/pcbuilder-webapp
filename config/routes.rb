@@ -13,8 +13,6 @@ Rails.application.routes.draw do
 
   get 'api/dashboard/:id/:cat_name', to: 'dashboard#getData'
 
-  get 'api/dashboard/category', to: 'search_dashboard#getCategory'
-
 
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
