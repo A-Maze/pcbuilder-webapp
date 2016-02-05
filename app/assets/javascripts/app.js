@@ -46,7 +46,7 @@ pcbuilder.controller("PcbuilderController", ['$scope', '$http', function ($scope
                     $("<td>").text(component['category']).appendTo(row);
                     $("<td>").text(component['brand'] + " " + component['name']).appendTo(row);
 
-                    var url = $('<a>').attr('href', component[currentPriceKey]).append("€ " + price);
+                    var url = $('<a>').attr('href', component['links'][currentPriceKey]).attr('target', '_blank').append("€ " + price);
                     $("<td>").append(url).appendTo(row);
 
                     $("#build-result").find("tbody").append(row);
