@@ -2,7 +2,7 @@ class DashboardController < ApplicationController
 
   def getData
 
-    @json_data = JSON.parse(Net::HTTP.get(URI.parse('http://95.85.12.99:6543/category/'+params[:cat_name]+'/product/'+params[:id]+'?limit=10')))['product']
+    @json_data = JSON.parse(Net::HTTP.get(URI.parse('http://95.85.12.99:6543/category/'+params[:cat_name]+'/product/'+params[:id])))['product']
     
     #@json_data = JSON.parse('{"date_modified": {"$date": 1451741150716}, "category": "CPU-koelers", "ean": "4260120532850", "Productcode": "TTC-NK85TZ", "_id": {"$oid": "5687c1ce0b5f962489007c20"}, "brand": "Titan", "records": [], "Toegevoegd aan prijsvergelijker": "vrijdag 5 juni 2009",
     #  "records": [
