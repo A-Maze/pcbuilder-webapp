@@ -1,0 +1,15 @@
+language: ruby
+rvm:
+    - 2.2.1
+    
+sudo: true
+
+install:
+    - npm install -g bower
+    - bundle install
+    - rake bower:install
+
+script: 'rspec'
+
+notifications:
+  slack: a-maze-team:KQAj0tr2neVDB38uGAQFcuA6

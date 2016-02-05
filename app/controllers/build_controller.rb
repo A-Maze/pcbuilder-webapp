@@ -1,25 +1,43 @@
 require 'json'
 
 class BuildController < ApplicationController
-  attr_accessor :products, :requirements, :components
+  attr_accessor :products, :requirements, :components, :offset, :limit, :times_stuck
 
   def initialize(requirements)
     self.components = Hash.new
     self.requirements = requirements
+    self.offset = 0
+    self.limit = 10
     self.products = get_products
+    self.times_stuck = 0
   end
 
   def get_products
-    products = JSON.parse(Net::HTTP.get(URI.parse(Rails.configuration.api_url + '/product')))
+    params = {'limit' => self.limit, 'offset' => self.offset}#, 'for_sale' => false}
+    url = Rails.configuration.api_url + '/product?' + URI.encode_www_form(params)
+
+    products = JSON.parse(Net::HTTP.get(URI.parse(url)))
     products.each do |product|
       product['product_schema'] = JSON.parse(product['product_schema'])
     end
   end
 
-
   def get_build(product_categories, requirements)
     if requirements
-      product_categories = filter(product_categories, requirements)
+      i = 0
+      while i < 100
+        i += 1
+        product_categories = filter(product_categories, requirements)
+
+        empty_category = get_empty_product_categories(product_categories)
+        break if empty_category.nil?
+
+        product_categories.each_with_index do |product_category, index|
+          if product_category['category_name'] == empty_category['category_name']
+            product_categories[index] = add_products(empty_category)
+          end
+        end
+      end
     end
 
     first_pick_category = Rails.configuration.build_first_component
@@ -48,7 +66,8 @@ class BuildController < ApplicationController
           end
         end
 
-        if stuck_at_category
+        if stuck_at_category && times_stuck < 100
+          self.times_stuck += 1
           product_categories = remove_product(stuck_at_category, self.components[stuck_at_category], product_categories)
           self.components.delete(stuck_at_category)
 
@@ -57,7 +76,7 @@ class BuildController < ApplicationController
       end
     end
 
-    if self.components.size == self.products.size
+    if self.components.size == self.products.size && !has_nil_components(self.components)
       self.components
     else
       nil
@@ -97,7 +116,7 @@ class BuildController < ApplicationController
       end
 
       if category == 'case' && components['motherboard']
-        if components['motherboard']['form_factor'] != product['Moederbord formaat']
+        if components['motherboard']['form_factor'] != product['form_factor']
           return false, 'motherboard'
         end
       end
@@ -146,6 +165,36 @@ class BuildController < ApplicationController
       end
     end
     products
+  end
+
+  def has_nil_components(components)
+    components.each do |key, comp|
+      if comp.nil?
+        return true
+      end
+    end
+    false
+  end
+
+  def get_empty_product_categories(product_categories)
+    product_categories.each do |category|
+      if category['products'].size == 0
+        return category
+      end
+    end
+    nil
+  end
+
+  def add_products(product_category)
+    self.offset += 10
+
+    params = {'limit' => self.limit, 'offset' => self.offset}#, 'for_sale' => false}
+    url = Rails.configuration.api_url + '/category/' + product_category['category_name'] + '?' + URI.encode_www_form(params)
+
+    product_category = JSON.parse(Net::HTTP.get(URI.parse(url)))
+    product_category['product_schema'] = JSON.parse(product_category['product_schema'])
+    product_category['category_name'] = product_category['name']
+    product_category
   end
 end
 
