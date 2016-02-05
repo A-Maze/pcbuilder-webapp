@@ -16,6 +16,7 @@ class SearchDashboardController < ApplicationController
 	end
 
 	def getCategory
+		p DateTime.strptime("1454535999769",'%s')
 		category = JSON.parse(Net::HTTP.get(URI.parse('http://95.85.12.99:6543/category?limit=10')))
 		render json: category
 	end

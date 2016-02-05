@@ -8,6 +8,7 @@ Rails.application.routes.draw do
   get 'dashboard/:id/:cat_name', to: 'dashboard#index'
 
   get 'search/:zoekterm', to: 'search_dashboard#search'
+  get 'search', to: 'search_dashboard#search'
   get 'api/search/:zoekterm', to: 'search_dashboard#getSearch'
 
   get 'api/dashboard/:id/:cat_name', to: 'dashboard#getData'

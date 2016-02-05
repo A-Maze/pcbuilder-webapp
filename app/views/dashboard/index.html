@@ -1,8 +1,9 @@
 <div class="container">
 <div class="outer_box">
 	<div ng-controller="dashboardController">
+	<div ng-if="keys">
 		<div class="title_box">
-		{{ product.name }}
+			{{ product.name }}
 		</div>
 		<div ng-repeat="(key, data) in keys">
 			<div ng-if="key != 'webshopprijzen'">
@@ -15,6 +16,13 @@
 			    </div>
 			</div>
 		</div>
+	</div>
+	<div ng-if="!keys">
+	<div class="title_box">
+		No data
+	</div>
+		No data found for this item
+	</div>
 	</div>
 </div>
 

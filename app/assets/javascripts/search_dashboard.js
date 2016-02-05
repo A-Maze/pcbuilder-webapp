@@ -2,14 +2,37 @@ search = angular.module('pcbuilder', []);
 
 search.controller("searchController", ['$scope', '$http', function ($scope, $http) {
   var pathName = window.location.pathname;
-  $http.get("/api"+pathName).success(function (data) {
-    $scope.products = data;
-  });
+  var categories;
   $http.get("/api/dashboard/category").success(function (category) {
-    $scope.category = category.categories;
+    categories = category.categories;
+    $http.get("/api"+pathName).success(function (data) {
+      $scope.products = data;
+    });
   });
+  
   $scope.submitform = function () {
     window.location.href = $scope.searchTag;
+  }
+  $scope.getCategory = function (msg) {
+    for(var i = 0; i <= categories.length ; i ++){
+      if(i == categories.length){
+        if(msg == 'Processors'){
+          return 'cpu';
+        }else if(msg == 'CPU-koelers'){
+          return 'cooler';
+        }else{
+          return msg;
+        }
+      }
+      if(categories[i].locale.nl_NL == msg){
+        return categories[i].name;
+      }
+    }
+        
+  }
+  $scope.log = function (a, b){
+    console.log(a);
+    console.log(b);
   }
 }]);
 
@@ -22,11 +45,9 @@ search.controller("dashboardController", ['$scope', '$http', function ($scope, $
     $scope.product = data;
     $scope.keys = data;
     prices = data.records;
+    google.charts.load('current', {'packages':['corechart']});
+    google.charts.setOnLoadCallback(drawChart);
   });
-
-  google.charts.load('current', {'packages':['corechart']});
-  google.charts.setOnLoadCallback(drawChart);
-  
   function drawChart() {
     var column = Array();
     var priceWebshop = Array();
@@ -37,29 +58,30 @@ search.controller("dashboardController", ['$scope', '$http', function ($scope, $
 
     //Ophalen van de datums, voor elke datum 1 rij
     for(var i = 0 ; i < prices.length ; i ++){
-      if(dateArray.indexOf(prices[i].date/*.split(" ")[0]*/) == -1){
-        price = prices[i].date;//.split(" ");
-        dateArray[dateArray.length] = price;//[0];
+      fullDate = new Date(prices[i].date.$date);
+      dateField = fullDate.getDate()+'/'+(fullDate.getMonth()+1)+'/'+fullDate.getFullYear();
+      if(dateArray.indexOf(dateField) == -1){
+        dateArray[dateArray.length] = dateField;
       }
     }
 
     //Sorteren van de datums oplopend
-    /*dateArray.sort(function(a, b){
+    dateArray.sort(function(a, b){
         var datum1 = a.split('/').reverse().join(),
             datum2 = b.split('/').reverse().join();
         return datum1 < datum2 ? -1 : (datum1 > datum2 ? 1 : 0);
-    });*/
+    });
 
     // Array maken met alle webshops
     // Array maken met de prijs en de webshop gecombineerd 
     // Two dimensional Array
-
-    console.log(prices);
     for(i = 0 ; i < prices.length ; i ++){
       if(webshopArray.indexOf(prices[i].webshop) == -1){
         webshopArray[webshopArray.length] = prices[i].webshop;
       }
-      priceWebshop[priceWebshop.length] = [prices[i].webshop, prices[i].price, prices[i].date]//.split(" ")[0]]
+      fullDate = new Date(prices[i].date.$date);
+      dateField = fullDate.getDate()+'/'+(fullDate.getMonth()+1)+'/'+fullDate.getFullYear();
+      priceWebshop[priceWebshop.length] = [prices[i].webshop, prices[i].price, dateField]//.split(" ")[0]]
     }
     
     // Eerste rij in de grafiek, waar staan de waardes voor, datum en webshop namen
