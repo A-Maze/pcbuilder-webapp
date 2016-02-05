@@ -3,10 +3,13 @@ search = angular.module('pcbuilder', []);
 search.controller("searchController", ['$scope', '$http', function ($scope, $http) {
   var pathName = window.location.pathname;
   $http.get("/api"+pathName).success(function (data) {
+    //Json data array voor alle gevonden producten in combinatie met de category naam
     $scope.jsonArray = data;
+    //Json data met alle producten gevonden
     $scope.products = data.products;
   });
   $scope.submitform = function () {
+    //Zoek naar alle producten met dat zoek woord
     window.location.href = $scope.searchTag;
   }
 }]);
@@ -15,14 +18,20 @@ search.controller("searchController", ['$scope', '$http', function ($scope, $htt
 
 search.controller("dashboardController", ['$scope', '$http', function ($scope, $http) {
   var pathName = window.location.pathname;
+  //Alle prijzen per dag per webshop komen in deze variabele
   var prices;
   $http.get("/api"+pathName).success(function (data) {
+    //De data van het opgehaalde product
     $scope.product = data;
     $scope.keys = data;
+    //Alle prijzen per dag per webshop
     prices = data.records;
+
+    //Laad de grafiek
     google.charts.load('current', {'packages':['corechart']});
     google.charts.setOnLoadCallback(drawChart);
   });
+
   function drawChart() {
     var column = Array();
     var priceWebshop = Array();
@@ -87,6 +96,7 @@ search.controller("dashboardController", ['$scope', '$http', function ($scope, $
       curveType: 'function',
       legend: { position: 'bottom' }
     };
+    
     var chart = new google.visualization.LineChart(document.getElementById('curve_chart'));
     chart.draw(data, options);
   }
