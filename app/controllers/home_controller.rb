@@ -9,7 +9,9 @@ class HomeController < ApplicationController
     JSON.parse(get_categorie_names)['categories'].each do |category|
       components.each do |component|
         if component['category'] == category['name']
-          component['name'] = category['locale']['nl_NL']
+          if category['locale']
+            component['name'] = category['locale']['nl_NL']
+          end
         end
       end
     end
