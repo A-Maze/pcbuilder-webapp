@@ -3,7 +3,7 @@ rvm:
     - 2.2.1
 
 install:
-    - npm install -g bower
+    - sudo npm install -g bower
     - bundle install
     - rake bower:install
 
