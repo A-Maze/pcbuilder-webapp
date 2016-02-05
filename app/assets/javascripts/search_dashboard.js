@@ -1,4 +1,4 @@
-search = angular.module('pcbuilder', []);
+search = angular.module('pcbuilder');
 
 search.controller("searchController", ['$scope', '$http', function ($scope, $http) {
   var pathName = window.location.pathname;

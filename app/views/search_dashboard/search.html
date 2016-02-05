@@ -1,3 +1,4 @@
+<div class="container">
 <div class="outer_box">
 <div class="title_box">
 Zoek
@@ -8,6 +9,7 @@ Zoek
 <div class="container" ng-controller="searchController">
     <div class="col-md-12">
         <form ng-submit="submitform()" ng-controller="searchController">
+            <label for="searchTag">Zoekwoord</label>
             <input type='text' name='searchTag' ng-model='searchTag'>
             <input type="submit">
         </form>
@@ -19,7 +21,6 @@ Zoek
 <div ng-controller="searchController">
 		<div class="search-result-div">
 				<div ng-repeat="categorie in jsonArray">
-					<h1>{{ categorie.category_name }}</h1>
 					<div ng-repeat="product in jsonArray[$index].products">
 							<a class='search-result' ng-href='/dashboard/{{ product._id.$oid }}/{{ categorie.category_name }}'>
 								<div class="text-muted search-text-div">
@@ -33,4 +34,5 @@ Zoek
 		</div>
 </div>
 	
+</div>
 </div>
